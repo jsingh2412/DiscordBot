@@ -1,21 +1,24 @@
+import os
 from re import I
+from dotenv import load_dotenv, find_dotenv
 import hikari
 import lightbulb
 
-#bot = hikari.GatewayBot(token = 'OTkxNTU0OTgxNDk0ODAwMzg2.GgYmXV.O6kxgD83El-Ek__yCiGaUeVd7ccoD9HXUPLaEI')
-bot = lightbulb.BotApp(token = 'OTkxNTU0OTgxNDk0ODAwMzg2.GgYmXV.O6kxgD83El-Ek__yCiGaUeVd7ccoD9HXUPLaEI', default_enabled_guilds=(991435839680827416,991820924590510162))
+load_dotenv(find_dotenv())
+#bot = hikari.GatewayBot(token = os.getenv('TOKEN'), default_enabled_guilds=(os.getenv('DEFAULT_GUILD_ID')))
+bot = lightbulb.BotApp(token = os.getenv('TOKEN'), default_enabled_guilds=os.getenv('DEFAULT_GUILD_ID'))
 
 inputed_roles = {}
 #test_roles = {'NA': ':red_circle:', 'EU' : ':orange_circle:', 'SA' : ':yellow_circle:', 'AS' : ':green_circle:', 'AF' : ':blue_circle:', 'OCE' : ':purple_circle:'}
 #bot.rest.add_reaction
 
+#bot launch
 @bot.listen(hikari.StartedEvent)
 async def on_started(event):
     print('Bot has started!')
 
-
+#message that is outputted once all inputs have been given
 async def rolesmessage():
-    
     rolemessage = ''
     for i in inputed_roles:
         rolemessage += inputed_roles[i] + ' ' +  i + '\n'
@@ -39,7 +42,7 @@ async def createrrmessage(event):
             print(i + inputed_roles[i])
             
 
-
+#roles initiation 
 @bot.listen(hikari.GuildMessageCreateEvent)
 async def roles(event):
     if event.is_bot or not event.content or event.channel_id!=(991944891695386654):
