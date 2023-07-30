@@ -1,3 +1,5 @@
+# bot.py
+# Jagroop Singh
 import os
 from re import I
 from dotenv import load_dotenv, find_dotenv
@@ -70,9 +72,15 @@ async def roles(event):
 #    print(event.emoji_name)
     
 
+# ALL CODE ABOVE THIS IS NOT BEING ACTIVELY USED
+
 
 listofroles = []
-
+#holds id of message that is created by bot
+message_id = ''
+#holds channel ID for bot to communicate in
+setChannel = ''
+roleMessageHolder = ''
 @bot.command
 @lightbulb.command('reactionroles','test groups')
 @lightbulb.implements(lightbulb.SlashCommandGroup)
@@ -104,16 +112,20 @@ async def clear(ctx: lightbulb.Context):
     listofroles.clear()
     await ctx.respond('List of roles has been cleared')
 
-@bot.listen(hikari.ReactionAddEvent)
-async def addarole(event):
-    if event.channel_id!=(993726578997600396):
-        return
-    if event.message_id==(993727929840316447):
-        print('yo it worked nice!')
 
+    #@bot.listen(hikari.ReactionAddEvent)
+    #async def addarole(event):
+    #    if event.channel_id!=(993726578997600396):
+    #        return
+    #    if event.message_id==(993727929840316447):
+    #        print('working!')
+
+# Uses the queued up roles to create a new message that lists 
+# the roles along with the emoji assoicated with them. 
+# The id for the message created is then captured by getMessageID
 @reactionroles.child
 @bot.command
-@lightbulb.command('createmessage',"Removes all roles already queue'd")
+@lightbulb.command('createmessage',"Creates and sends a message using the queued roles.")
 @lightbulb.implements(lightbulb.SlashSubCommand)
 async def createmessage(ctx: lightbulb.Context):
     try:
@@ -137,5 +149,23 @@ async def createmessage(ctx: lightbulb.Context):
         await ctx.respond(
             'Some error occured. Make sure you have added at least one role before using this command!'
         )
+        
+@bot.listen(hikari.ReactionAddEvent)
+async def checkRoleSelection(message_id, event, ctx: lightbulb.Context):
+    try:
+        if(message_id == event.message_id):
+            ctx.respond('caught reaction')
+    except:
+        await ctx.respond(
+            'No reaction was found, try again.'
+        )
+        
+@bot.listen(hikari.GuildMessageCreateEvent)
+async def getMessageID(event):
+    if event.is_bot & event.message==rolesmessage:
+        message_id = event.message_id
+    else:
+        return
+        
 bot.run()
 
