@@ -1,5 +1,6 @@
 # bot.py
 # Jagroop Singh
+# WIP
 import os
 from re import I
 from dotenv import load_dotenv, find_dotenv
@@ -24,7 +25,7 @@ async def rolesmessage():
     rolemessage = ''
     for i in inputed_roles:
         rolemessage += inputed_roles[i] + ' ' +  i + '\n'
-    
+    #hard coded until channel set command is finished
     await bot.rest.create_message(
         channel=(991944891695386654), 
         content = rolemessage
