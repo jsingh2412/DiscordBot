@@ -12,9 +12,3 @@ Go into folder with bot.py file.
 cd \DiscordBot
 Run bot.
 python -m bot.py
-
-# Convert PPTX
-
-brew install ffmpeg libreoffice ghostscript imagemagick
-npm install unzipper fs-extra child_process
-node convertpptx.js {pptxfile}

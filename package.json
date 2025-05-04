@@ -2,6 +2,7 @@
   "name": "leavebotto",
   "version": "1.0.0",
   "description": "A simple discord bot that keeps track of users leaving.",
+  "type": "module",
   "private": true,
   "main": "src/server.js",
   "scripts": {
@@ -17,12 +18,9 @@
   "author": "Justin Beckwith <justin.beckwith@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "child_process": "^1.0.2",
     "discord-interactions": "^4.0.0",
     "discord.js": "^14.17.3",
-    "fs-extra": "^11.3.0",
-    "itty-router": "^5.0.9",
-    "unzipper": "^0.12.3"
+    "itty-router": "^5.0.9"
   },
   "devDependencies": {
     "@eslint/js": "^9.1.1",
